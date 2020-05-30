@@ -26,6 +26,9 @@ import os.path as op
 repo_path = op.dirname(op.dirname(op.dirname(__file__)))
 sys.path.append(op.join(repo_path, 'pyrevitlib'))
 
+# Add Jarvis path for session manager
+sys.path.append(repo_path + '\\extensions\\jarvis.lib')
+
 # now pyrevit can be imported
 from pyrevit.loader import sessionmgr
 
