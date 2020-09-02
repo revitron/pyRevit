@@ -114,8 +114,8 @@ def _perform_onsessionloadstart_ops():
         _set_autoupdate_inprogress(False)
 
     # Prepare Jarvis
-    import jarvis
-    jarvis.system.Session.prepare()
+    import rpm
+    rpm.system.Session.prepare()
 
     # once pre-load is complete, report environment conditions
     uuid_str = sessioninfo.new_session_uuid()
