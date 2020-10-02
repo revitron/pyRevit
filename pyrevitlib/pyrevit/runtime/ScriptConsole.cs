@@ -81,7 +81,7 @@ namespace PyRevitLabs.PyRevit.Runtime {
             SizeChanged += ScriptOutput_SizeChanged;
 
             // setup template styles
-            Background = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x6e, 0x71, 0x79) };
+            Background = Brushes.White;
             var glowColor = Color.FromArgb(0x66, 0x2c, 0x3e, 0x50);
             // activating glow on the window causes an exception in PresentationFramework on Revit 2019
             // when closing Revit with pyRevit windows open.
@@ -119,14 +119,14 @@ namespace PyRevitLabs.PyRevit.Runtime {
                 Source = new Uri("pack://application:,,,/pyRevitLabs.MahAppsMetro;component/Styles/Accents/Steel.xaml")
             };
 
-            var pyrevitHighlightColor = Color.FromArgb(0xFF, 0x6e, 0x71, 0x79);
-            var pyrevitBackground = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x28, 0x2c, 0x34) };
+            var pyrevitHighlightColor = Color.FromArgb(0xFF, 0xf3, 0x9c, 0x12);
+            var pyrevitBackground = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x2c, 0x3e, 0x50) };
             var pyrevitHighlight = new SolidColorBrush() { Color = pyrevitHighlightColor };
             accentResDict["AccentColorBrush"] = pyrevitBackground;
             accentResDict["WindowTitleColorBrush"] = pyrevitBackground;
 
             // overriding colors on the progressbar control
-            var progressBarOverlay = Color.FromArgb(0x11, 0xFF, 0xFF, 0xFF);
+            var progressBarOverlay = Color.FromArgb(0x66, 0xFF, 0xFF, 0xFF);
             accentResDict["ProgressBrush"] = pyrevitHighlight;
             accentResDict["ProgressIndeterminateColor1"] = progressBarOverlay;
             accentResDict["ProgressIndeterminateColor2"] = progressBarOverlay;
@@ -226,7 +226,7 @@ namespace PyRevitLabs.PyRevit.Runtime {
 
             // activiy bar
             activityBar = new ActivityBar();
-            activityBar.Foreground = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x6e, 0x71, 0x79) };
+            activityBar.Foreground = Brushes.White;
             activityBar.Visibility = Visibility.Collapsed;
 
             // Add the interop host control to the Grid
@@ -315,8 +315,8 @@ namespace PyRevitLabs.PyRevit.Runtime {
             openButton.Click += OpenButton_Click;
             RightWindowCommands.Items.Insert(0, openButton);
 
-            this.Width = 960; this.MinWidth = 800;
-            this.Height = 640; this.MinHeight = this.TitlebarHeight;
+            this.Width = 900; this.MinWidth = 700;
+            this.Height = 600; this.MinHeight = this.TitlebarHeight;
             this.ResizeMode = ResizeMode.CanResize;
 
             // setup auto-collapse
@@ -729,7 +729,7 @@ namespace PyRevitLabs.PyRevit.Runtime {
             var path = new System.Windows.Shapes.Path();
             path.Stretch = Stretch.Uniform;
             path.Height = size;
-            path.Fill = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x8d, 0x93, 0x96) };
+            path.Fill = Brushes.White;
             path.Data = Geometry.Parse(geom);
             return path;
         }
