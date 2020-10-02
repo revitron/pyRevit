@@ -81,7 +81,7 @@ namespace PyRevitLabs.PyRevit.Runtime {
             SizeChanged += ScriptOutput_SizeChanged;
 
             // setup template styles
-            Background = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x77, 0x77, 0x77) };
+            Background = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x6e, 0x71, 0x79) };
             var glowColor = Color.FromArgb(0x66, 0x2c, 0x3e, 0x50);
             // activating glow on the window causes an exception in PresentationFramework on Revit 2019
             // when closing Revit with pyRevit windows open.
@@ -119,8 +119,8 @@ namespace PyRevitLabs.PyRevit.Runtime {
                 Source = new Uri("pack://application:,,,/pyRevitLabs.MahAppsMetro;component/Styles/Accents/Steel.xaml")
             };
 
-            var pyrevitHighlightColor = Color.FromArgb(0xFF, 0xff, 0xff, 0xff);
-            var pyrevitBackground = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x22, 0x22, 0x22) };
+            var pyrevitHighlightColor = Color.FromArgb(0xFF, 0x6e, 0x71, 0x79);
+            var pyrevitBackground = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x28, 0x2c, 0x34) };
             var pyrevitHighlight = new SolidColorBrush() { Color = pyrevitHighlightColor };
             accentResDict["AccentColorBrush"] = pyrevitBackground;
             accentResDict["WindowTitleColorBrush"] = pyrevitBackground;
@@ -226,7 +226,7 @@ namespace PyRevitLabs.PyRevit.Runtime {
 
             // activiy bar
             activityBar = new ActivityBar();
-            activityBar.Foreground = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x77, 0x77, 0x77) };
+            activityBar.Foreground = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x6e, 0x71, 0x79) };
             activityBar.Visibility = Visibility.Collapsed;
 
             // Add the interop host control to the Grid
@@ -729,7 +729,7 @@ namespace PyRevitLabs.PyRevit.Runtime {
             var path = new System.Windows.Shapes.Path();
             path.Stretch = Stretch.Uniform;
             path.Height = size;
-            path.Fill = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x77, 0x77, 0x77) };
+            path.Fill = new SolidColorBrush() { Color = Color.FromArgb(0xFF, 0x8d, 0x93, 0x96) };
             path.Data = Geometry.Parse(geom);
             return path;
         }
