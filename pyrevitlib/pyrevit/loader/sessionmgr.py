@@ -113,10 +113,6 @@ def _perform_onsessionloadstart_ops():
         updater.update_pyrevit()
         _set_autoupdate_inprogress(False)
 
-    # Prepare Jarvis
-    import rpm
-    rpm.system.Session.prepare()
-
     # once pre-load is complete, report environment conditions
     uuid_str = sessioninfo.new_session_uuid()
     sessioninfo.report_env()
