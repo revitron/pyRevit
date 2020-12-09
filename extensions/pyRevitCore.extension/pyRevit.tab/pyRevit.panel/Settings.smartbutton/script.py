@@ -173,7 +173,7 @@ class SettingsWindow(forms.WPFWindow):
                 logger.debug('Failed getting active cpython engine.')
                 self.cpythonEngines.IsEnabled = False
         else:
-            logger.error('Error determining current attached clone.')
+            logger.debug('Error determining current attached clone.')
             self.disable_element(self.availableEngines)
 
     def _setup_user_extensions_list(self):
@@ -449,7 +449,7 @@ class SettingsWindow(forms.WPFWindow):
 
     def addfolder(self, sender, args):
         """Callback method for adding extension folder to configs and list"""
-        new_path = forms.pick_folder()
+        new_path = forms.pick_folder(owner=self)
         if new_path:
             new_path = os.path.normpath(new_path)
 
@@ -479,7 +479,7 @@ class SettingsWindow(forms.WPFWindow):
 
     def pick_telemetry_folder(self, sender, args):
         """Callback method for picking destination folder for telemetry files"""
-        new_path = forms.pick_folder()
+        new_path = forms.pick_folder(owner=self)
         if new_path:
             self.telemetryfile_tb.Text = os.path.normpath(new_path)
 
