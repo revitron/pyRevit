@@ -14,8 +14,8 @@ from functools import wraps
 import datetime
 import webbrowser
 
-from pyrevit import HOST_APP, EXEC_PARAMS, BIN_DIR, PyRevitCPythonNotSupported
-from pyrevit import PyRevitException, PyRevitCPythonNotSupported
+from pyrevit import HOST_APP, EXEC_PARAMS, DOCS, BIN_DIR
+from pyrevit import PyRevitCPythonNotSupported, PyRevitException, PyRevitCPythonNotSupported
 import pyrevit.compat as compat
 from pyrevit.compat import safe_strtype
 
@@ -62,12 +62,14 @@ WPF_VISIBLE = framework.Windows.Visibility.Visible
 XAML_FILES_DIR = op.dirname(__file__)
 
 
-ParamDef = namedtuple('ParamDef', ['name', 'istype'])
+ParamDef = namedtuple('ParamDef', ['name', 'istype', 'definition', 'isreadonly'])
 """Parameter definition tuple.
 
 Attributes:
     name (str): parameter name
     istype (bool): true if type parameter, otherwise false
+    definition (Autodesk.Revit.DB.Definition): parameter definition object
+    isreadonly (bool): true if the parameter value can't be edited
 """
 
 
@@ -492,6 +494,8 @@ class SelectFromList(TemplateUserInputWindow):
             object attribute that should be read as item name.
         multiselect (bool, optional):
             allow multi-selection (uses check boxes). defaults to False
+        info_panel (bool, optional):
+            show information panel and fill with .description property of item
         return_all (bool, optional):
             return all items. This is handly when some input items have states
             and the script needs to check the state changes on all items.
@@ -572,6 +576,9 @@ class SelectFromList(TemplateUserInputWindow):
             self.multiselect = False
             self.list_lb.SelectionMode = Controls.SelectionMode.Single
             self.hide_element(self.checkboxbuttons_g)
+
+        # info panel?
+        self.info_panel = kwargs.get('info_panel', False)
 
         # return checked items only?
         self.return_all = kwargs.get('return_all', False)
@@ -726,6 +733,19 @@ class SelectFromList(TemplateUserInputWindow):
             else:
                 checkbox.checked = state
 
+    def _toggle_info_panel(self, state=True):
+        if state:
+            # enable the info panel
+            self.splitterCol.Width = System.Windows.GridLength(8)
+            self.infoCol.Width = System.Windows.GridLength(self.Width/2)
+            self.show_element(self.infoSplitter)
+            self.show_element(self.infoPanel)
+        else:
+            self.splitterCol.Width = self.infoCol.Width = \
+                System.Windows.GridLength.Auto
+            self.hide_element(self.infoSplitter)
+            self.hide_element(self.infoPanel)
+
     def toggle_all(self, sender, args):    #pylint: disable=W0613
         """Handle toggle all button to toggle state of all check boxes."""
         self._set_states(flip=True)
@@ -758,6 +778,9 @@ class SelectFromList(TemplateUserInputWindow):
 
     def search_txt_changed(self, sender, args):    #pylint: disable=W0613
         """Handle text change in search box."""
+        if self.info_panel:
+            self._toggle_info_panel(state=False)
+
         if self.search_tb.Text == '':
             self.hide_element(self.clrsearch_b)
         else:
@@ -766,7 +789,16 @@ class SelectFromList(TemplateUserInputWindow):
         self._list_options(option_filter=self.search_tb.Text)
 
     def selection_changed(self, sender, args):
+        if self.info_panel:
+            self._toggle_info_panel(state=False)
+
         self._list_options(option_filter=self.search_tb.Text)
+
+    def selected_item_changed(self, sender, args):
+        if self.info_panel and self.list_lb.SelectedItem is not None:
+            self._toggle_info_panel(state=True)
+            self.infoData.Text = \
+                getattr(self.list_lb.SelectedItem, 'description', '')
 
     def toggle_regex(self, sender, args):
         """Activate regex in search"""
@@ -1658,7 +1690,7 @@ def select_revisions(title='Select Revision',
         ... [<Autodesk.Revit.DB.Revision object>,
         ...  <Autodesk.Revit.DB.Revision object>]
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
     revisions = sorted(revit.query.get_revisions(doc=doc),
                        key=lambda x: x.SequenceNumber)
 
@@ -1712,7 +1744,7 @@ def select_sheets(title='Select Sheets',
         ... [<Autodesk.Revit.DB.ViewSheet object>,
         ...  <Autodesk.Revit.DB.ViewSheet object>]
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
 
     # check for previously selected sheets
     if use_selection:
@@ -1806,7 +1838,7 @@ def select_views(title='Select Views',
         ... [<Autodesk.Revit.DB.View object>,
         ...  <Autodesk.Revit.DB.View object>]
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
 
     # check for previously selected sheets
     if use_selection:
@@ -1873,7 +1905,7 @@ def select_levels(title='Select Levels',
         ... [<Autodesk.Revit.DB.Level object>,
         ...  <Autodesk.Revit.DB.Level object>]
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
 
     # check for previously selected sheets
     if use_selection:
@@ -1941,7 +1973,7 @@ def select_viewtemplates(title='Select View Templates',
         ... [<Autodesk.Revit.DB.View object>,
         ...  <Autodesk.Revit.DB.View object>]
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
     all_viewtemplates = revit.query.get_all_view_templates(doc=doc)
 
     if filterfunc:
@@ -1988,7 +2020,7 @@ def select_schedules(title='Select Schedules',
         ... [<Autodesk.Revit.DB.ViewSchedule object>,
         ...  <Autodesk.Revit.DB.ViewSchedule object>]
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
     all_schedules = revit.query.get_all_schedules(doc=doc)
 
     if filterfunc:
@@ -2084,7 +2116,7 @@ def select_titleblocks(title='Select Titleblock',
         >>> forms.select_titleblocks()
         ... <Autodesk.Revit.DB.ElementId object>
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
     titleblocks = DB.FilteredElementCollector(doc)\
                     .OfCategory(DB.BuiltInCategory.OST_TitleBlocks)\
                     .WhereElementIsElementType()\
@@ -2192,7 +2224,8 @@ def select_parameters(src_element,
                       multiple=True,
                       filterfunc=None,
                       include_instance=True,
-                      include_type=True):
+                      include_type=True,
+                      exclude_readonly=True):
     """Standard form for selecting parameters from given element.
 
     Args:
@@ -2205,6 +2238,7 @@ def select_parameters(src_element,
             filter function to be applied to context items.
         include_instance (bool, optional): list instance parameters
         include_type (bool, optional): list type parameters
+        exclude_readonly (bool, optional): only shows parameters that are editable
 
     Returns:
         list[:obj:`ParamDef`]: list of paramdef objects
@@ -2224,23 +2258,32 @@ def select_parameters(src_element,
     if include_instance:
         # collect instance parameters
         param_defs.extend(
-            [ParamDef(name=x.Definition.Name, istype=False)
+            [ParamDef(name=x.Definition.Name,
+                      istype=False,
+                      definition=x.Definition,
+                      isreadonly=x.IsReadOnly)
              for x in src_element.Parameters
-             if not x.IsReadOnly and x.StorageType != non_storage_type]
+             if x.StorageType != non_storage_type]
         )
 
     if include_type:
         # collect type parameters
         src_type = revit.query.get_type(src_element)
         param_defs.extend(
-            [ParamDef(name=x.Definition.Name, istype=True)
+            [ParamDef(name=x.Definition.Name,
+                      istype=True,
+                      definition=x.Definition,
+                      isreadonly=x.IsReadOnly)
              for x in src_type.Parameters
-             if not x.IsReadOnly and x.StorageType != non_storage_type]
+             if x.StorageType != non_storage_type]
         )
+
+    if exclude_readonly:
+        param_defs = filter(lambda x: not x.isreadonly, param_defs)
 
     if filterfunc:
         param_defs = filter(filterfunc, param_defs)
-    
+
     param_defs.sort(key=lambda x: x.name)
 
     itemplate = utils.load_ctrl_template(
@@ -2295,7 +2338,7 @@ def select_family_parameters(family_doc,
         ... )
         ... [<DB.FamilyParameter >, <DB.FamilyParameter >]
     """
-    family_doc = family_doc or HOST_APP.doc
+    family_doc = family_doc or DOCS.doc
     family_params = revit.query.get_family_parameters(family_doc)
     # get all params used in labeles
     label_param_ids = \
@@ -2598,7 +2641,7 @@ def save_file(file_ext='', files_filter='', init_dir='', default_name='',
         sf_dlg.InitialDirectory = init_dir
     if title:
         of_dlg.Title = title
-    
+
     # setting default filename
     sf_dlg.FileName = default_name
 
@@ -2625,12 +2668,12 @@ def pick_excel_file(save=False, title=None):
                      title=title)
 
 
-def save_excel_file():
+def save_excel_file(title=None):
     """File save dialog for an excel file.
 
     Args:
         title (str): text to show in the title bar
-    
+
     Returns:
         str: file path
     """
@@ -2647,7 +2690,7 @@ def check_workshared(doc=None, message='Model is not workshared.'):
     Returns:
         bool: True if doc is workshared
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
     if not doc.IsWorkshared:
         alert(message, warn_icon=True)
         return False
@@ -2687,7 +2730,7 @@ def check_familydoc(doc=None, family_cat=None, exitscript=False):
         >>> forms.check_familydoc(doc=revit.doc, family_cat='Data Devices')
         ... True
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
     family_cat = revit.query.get_category(family_cat)
     if doc.IsFamilyDocument and family_cat:
         if doc.OwnerFamily.FamilyCategory.Id == family_cat.Id:
@@ -2717,7 +2760,7 @@ def check_modeldoc(doc=None, exitscript=False):
         >>> forms.check_modeldoc(doc=revit.doc)
         ... True
     """
-    doc = doc or HOST_APP.doc
+    doc = doc or DOCS.doc
     if not doc.IsFamilyDocument:
         return True
 
@@ -2989,6 +3032,37 @@ def ask_to_use_selected(type_name, count=None, multiple=True):
     if count is not None:
         report = '{} {}'.format(count, report)
     return alert(message % report, yes=True, no=True)
+
+
+def ask_for_color(default=None):
+    """Show system color picker and ask for color
+
+    Args:
+        default (str): default color in HEX ARGB e.g. #ff808080
+        val (type): desc
+
+    Returns:
+        str: selected color in HEX ARGB e.g. #ff808080, or None if cancelled
+
+    Example:
+        >>> forms.ask_for_color()
+        ... '#ff808080'
+    """
+    # colorDlg.Color
+    color_picker = Forms.ColorDialog()
+    if default:
+        default = default.replace('#', '')
+        color_picker.Color = System.Drawing.Color.FromArgb(
+            int(default[:2], 16),
+            int(default[2:4], 16),
+            int(default[4:6], 16),
+            int(default[6:8], 16)
+        )
+    color_picker.FullOpen = True
+    if color_picker.ShowDialog() == Forms.DialogResult.OK:
+        c = color_picker.Color
+        c_hex = ''.join('{:02X}'.format(int(x)) for x in [c.A, c.R, c.G, c.B])
+        return '#' + c_hex
 
 
 def inform_wip():

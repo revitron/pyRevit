@@ -8,7 +8,7 @@ Usage:
 	pyrevit clone (-h | --help)
 	pyrevit clone <clone_name> <deployment_name> [--dest=<dest_path>] [--branch=<branch_name>] [--log=<log_file>]
 	pyrevit clone <clone_name> --image=<image_url> [--dest=<dest_path>] [--log=<log_file>]
-	pyrevit clone <clone_name> [--dest=<dest_path>] [--source=<repo_url>] [--branch=<branch_name>] [--log=<log_file>] [--username=<username>] [--password=<password>]
+	pyrevit clone <clone_name> [--dest=<dest_path>] [--source=<repo_url>] [--branch=<branch_name>] [--log=<log_file>] [(--username=<username> --password=<password> | --token=<auth_token>)]
 	pyrevit clones [(-h | --help)]
 	pyrevit clones (info | open) <clone_name>
 	pyrevit clones add <clone_name> <clone_path> [--force] [--log=<log_file>]
@@ -20,11 +20,11 @@ Usage:
 	pyrevit clones commit <clone_name> [<commit_hash>] [--log=<log_file>]
 	pyrevit clones origin <clone_name> --reset [--log=<log_file>]
 	pyrevit clones origin <clone_name> [<origin_url>] [--log=<log_file>]
-	pyrevit clones update (--all | <clone_name>) [--log=<log_file>] [--username=<username>] [--password=<password>]
+	pyrevit clones update (--all | <clone_name>) [--log=<log_file>] [(--username=<username> --password=<password> | --token=<auth_token>)]
 	pyrevit clones deployments <clone_name>
 	pyrevit clones engines <clone_name>
 	pyrevit attach (-h | --help)
-	pyrevit attach <clone_name> (latest | dynamosafe | <engine_version>) (<revit_year> | --installed | --attached) [--allusers] [--log=<log_file>]
+	pyrevit attach <clone_name> (default | <engine_version>) (<revit_year> | --installed | --attached) [--allusers] [--log=<log_file>]
 	pyrevit attached [<revit_year>] [(-h | --help)]
 	pyrevit switch (-h | --help)
 	pyrevit switch <clone_name> [<revit_year>]
@@ -32,7 +32,7 @@ Usage:
 	pyrevit detach (--all | <revit_year>) [--log=<log_file>]
 	pyrevit extend (-h | --help)
 	pyrevit extend <extension_name> [--dest=<dest_path>] [--branch=<branch_name>] [--log=<log_file>]
-	pyrevit extend (ui | lib | run) <extension_name> <repo_url> [--dest=<dest_path>] [--branch=<branch_name>] [--log=<log_file>] [--username=<username>] [--password=<password>]
+	pyrevit extend (ui | lib) <extension_name> <repo_url> [--dest=<dest_path>] [--branch=<branch_name>] [--log=<log_file>] [(--username=<username> --password=<password> | --token=<auth_token>)]
 	pyrevit extensions [(-h | --help)]
 	pyrevit extensions search <search_pattern>
 	pyrevit extensions (info | help ) <extension_name>
@@ -49,7 +49,7 @@ Usage:
 	pyrevit extensions sources [(-h | --help)]
 	pyrevit extensions sources forget --all [--log=<log_file>]
 	pyrevit extensions sources (add | forget) <source_json_or_url> [--log=<log_file>]
-	pyrevit extensions update (--all | <extension_name>) [--log=<log_file>] [--username=<username>] [--password=<password>]
+	pyrevit extensions update (--all | <extension_name>) [--log=<log_file>] [(--username=<username> --password=<password> | --token=<auth_token>)]
 	pyrevit releases (-h | --help)
 	pyrevit releases [--pre] [--notes]
 	pyrevit releases latest [--pre] [--notes]
@@ -64,7 +64,9 @@ Usage:
 	pyrevit revits killall [<revit_year>] [--log=<log_file>]
 	pyrevit revits fileinfo <file_or_dir_path> [--csv=<output_file>] [--rvt] [--rte] [--rfa] [--rft]
 	pyrevit run (-h | --help)
+	pyrevit run commands
 	pyrevit run <script_or_command_name> [--revit=<revit_year>] [--purge] [--import=<import_path>]
+	pyrevit run <script_or_command_name> --models=<model_list_file> --revit=<revit_year> [--purge] [--import=<import_path>]
 	pyrevit run <script_or_command_name> <model_file> [--revit=<revit_year>] [--purge] [--import=<import_path>]
 	pyrevit caches (-h | --help)
 	pyrevit caches [bim360] clear (--all | <revit_year>) [--log=<log_file>]
@@ -93,6 +95,7 @@ Usage:
 	pyrevit configs telemetry [(enable | disable)] [--log=<log_file>]
 	pyrevit configs telemetry utc [(yes | no)] [--log=<log_file>]
 	pyrevit configs telemetry (file | server) [<dest_path>] [--log=<log_file>]
+	pyrevit configs telemetry hooks [(yes | no)] [--log=<log_file>]
 	pyrevit configs apptelemetry [(enable | disable)] [--log=<log_file>]
 	pyrevit configs apptelemetry flags [<flags>] [--log=<log_file>]
 	pyrevit configs apptelemetry server [<server_path>] [--log=<log_file>]

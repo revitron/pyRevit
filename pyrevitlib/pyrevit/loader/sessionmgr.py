@@ -67,7 +67,7 @@ def _setup_output():
     runtime_info = sessioninfo.get_runtime_info()
     out_window.AppVersion = '{}:{}:{}'.format(
         runtime_info.pyrevit_version,
-        runtime_info.engine_version,
+        int(runtime_info.engine_version),
         runtime_info.host_version
         )
 
@@ -149,7 +149,7 @@ def _perform_onsessionloadcomplete_ops():
 
     # activate internal handlers
     # toggle doc colorizer
-    revit.ui.toggle_doc_colorizer(user_config.colorize_docs)
+    revit.tabs.init_doc_colorizer(user_config)
 
     # activate runtime routes server
     if user_config.routes_server:
