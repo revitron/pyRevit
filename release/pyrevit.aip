@@ -150,7 +150,7 @@
     <ROW Directory="IPY2710_Dir" Directory_Parent="engines_Dir" DefaultDir="IPY2710"/>
     <ROW Directory="IPY2711PR_Dir" Directory_Parent="engines_Dir" DefaultDir="IPY271~1|IPY2711PR"/>
     <ROW Directory="IPY273_Dir" Directory_Parent="engines_Dir" DefaultDir="IPY273"/>
-    <ROW Directory="IPY277_Dir" Directory_Parent="engines_Dir" DefaultDir="IPY277"/>
+    <ROW Directory="IPY277_Dir" Directory_Parent="engines_Dir" DefaultDir="277"/>
     <ROW Directory="IPY278_Dir" Directory_Parent="engines_Dir" DefaultDir="IPY278"/>
     <ROW Directory="IPY279_Dir" Directory_Parent="engines_Dir" DefaultDir="IPY279"/>
     <ROW Directory="Icons8.urlbutton_Dir" Directory_Parent="links.stack_Dir" DefaultDir="ICONS8~1.URL|Icons8.urlbutton"/>
@@ -3144,15 +3144,15 @@
     <ROW File="Microsoft.Scripting.Metadata.dll_1" Component_="Microsoft.Scripting.Metadata.dll_1" FileName="MICROS~3.DLL|Microsoft.Scripting.Metadata.dll" Attributes="0" SourcePath="..\bin\engines\IPY273\Microsoft.Scripting.Metadata.dll" SelfReg="false"/>
     <ROW File="pyRevitLoader.dll_7" Component_="pyRevitLoader.dll_7" FileName="PYREVI~1.DLL|pyRevitLoader.dll" Attributes="0" SourcePath="..\bin\engines\IPY273\pyRevitLoader.dll" SelfReg="false"/>
     <ROW File="pyRevitRunner.dll_7" Component_="pyRevitRunner.dll_7" FileName="PYREVI~2.DLL|pyRevitRunner.dll" Attributes="0" SourcePath="..\bin\engines\IPY273\pyRevitRunner.dll" SelfReg="false"/>
-    <ROW File="IronPython.dll_7" Component_="IronPython.dll_7" FileName="IRONPY~1.DLL|IronPython.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\IronPython.dll" SelfReg="false"/>
-    <ROW File="IronPython.Modules.dll_7" Component_="IronPython.Modules.dll_7" FileName="IRONPY~2.DLL|IronPython.Modules.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\IronPython.Modules.dll" SelfReg="false"/>
-    <ROW File="IronPython.SQLite.dll_7" Component_="IronPython.SQLite.dll_7" FileName="IRONPY~3.DLL|IronPython.SQLite.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\IronPython.SQLite.dll" SelfReg="false"/>
-    <ROW File="IronPython.Wpf.dll_7" Component_="IronPython.Wpf.dll_7" FileName="IRONPY~4.DLL|IronPython.Wpf.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\IronPython.Wpf.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Dynamic.dll_7" Component_="Microsoft.Dynamic.dll_7" FileName="MICROS~1.DLL|Microsoft.Dynamic.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\Microsoft.Dynamic.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Scripting.dll_7" Component_="Microsoft.Scripting.dll_7" FileName="MICROS~2.DLL|Microsoft.Scripting.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\Microsoft.Scripting.dll" SelfReg="false"/>
-    <ROW File="Microsoft.Scripting.Metadata.dll_2" Component_="Microsoft.Scripting.Metadata.dll_2" FileName="MICROS~3.DLL|Microsoft.Scripting.Metadata.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\Microsoft.Scripting.Metadata.dll" SelfReg="false"/>
-    <ROW File="pyRevitLoader.dll_8" Component_="pyRevitLoader.dll_8" FileName="PYREVI~1.DLL|pyRevitLoader.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\pyRevitLoader.dll" SelfReg="false"/>
-    <ROW File="pyRevitRunner.dll_8" Component_="pyRevitRunner.dll_8" FileName="PYREVI~2.DLL|pyRevitRunner.dll" Attributes="0" SourcePath="..\bin\engines\IPY277\pyRevitRunner.dll" SelfReg="false"/>
+    <ROW File="IronPython.dll_7" Component_="IronPython.dll_7" FileName="IRONPY~1.DLL|IronPython.dll" Attributes="0" SourcePath="..\bin\engines\277\IronPython.dll" SelfReg="false"/>
+    <ROW File="IronPython.Modules.dll_7" Component_="IronPython.Modules.dll_7" FileName="IRONPY~2.DLL|IronPython.Modules.dll" Attributes="0" SourcePath="..\bin\engines\277\IronPython.Modules.dll" SelfReg="false"/>
+    <ROW File="IronPython.SQLite.dll_7" Component_="IronPython.SQLite.dll_7" FileName="IRONPY~3.DLL|IronPython.SQLite.dll" Attributes="0" SourcePath="..\bin\engines\277\IronPython.SQLite.dll" SelfReg="false"/>
+    <ROW File="IronPython.Wpf.dll_7" Component_="IronPython.Wpf.dll_7" FileName="IRONPY~4.DLL|IronPython.Wpf.dll" Attributes="0" SourcePath="..\bin\engines\277\IronPython.Wpf.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Dynamic.dll_7" Component_="Microsoft.Dynamic.dll_7" FileName="MICROS~1.DLL|Microsoft.Dynamic.dll" Attributes="0" SourcePath="..\bin\engines\277\Microsoft.Dynamic.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Scripting.dll_7" Component_="Microsoft.Scripting.dll_7" FileName="MICROS~2.DLL|Microsoft.Scripting.dll" Attributes="0" SourcePath="..\bin\engines\277\Microsoft.Scripting.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Scripting.Metadata.dll_2" Component_="Microsoft.Scripting.Metadata.dll_2" FileName="MICROS~3.DLL|Microsoft.Scripting.Metadata.dll" Attributes="0" SourcePath="..\bin\engines\277\Microsoft.Scripting.Metadata.dll" SelfReg="false"/>
+    <ROW File="pyRevitLoader.dll_8" Component_="pyRevitLoader.dll_8" FileName="PYREVI~1.DLL|pyRevitLoader.dll" Attributes="0" SourcePath="..\bin\engines\277\pyRevitLoader.dll" SelfReg="false"/>
+    <ROW File="pyRevitRunner.dll_8" Component_="pyRevitRunner.dll_8" FileName="PYREVI~2.DLL|pyRevitRunner.dll" Attributes="0" SourcePath="..\bin\engines\277\pyRevitRunner.dll" SelfReg="false"/>
     <ROW File="IKVM.Reflection.dll_4" Component_="IKVM.Reflection.dll_4" FileName="IKVMRE~1.DLL|IKVM.Reflection.dll" Attributes="0" SourcePath="..\bin\engines\IPY278\IKVM.Reflection.dll" SelfReg="false"/>
     <ROW File="IronPython.dll_8" Component_="IronPython.dll_8" FileName="IRONPY~1.DLL|IronPython.dll" Attributes="0" SourcePath="..\bin\engines\IPY278\IronPython.dll" SelfReg="false"/>
     <ROW File="IronPython.Modules.dll_8" Component_="IronPython.Modules.dll_8" FileName="IRONPY~2.DLL|IronPython.Modules.dll" Attributes="0" SourcePath="..\bin\engines\IPY278\IronPython.Modules.dll" SelfReg="false"/>

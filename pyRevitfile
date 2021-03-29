@@ -8,11 +8,11 @@ path = 'bin\engines\IPY273'
 assembly = 'pyRevitLoader.dll'
 description = 'IronPython Engine'
 
-[engines.IPY277]
+[engines.277]
 kernel = 'IronPython'
 version = 277
 runtime = true
-path = 'bin\engines\IPY277'
+path = 'bin\engines\277'
 assembly = 'pyRevitLoader.dll'
 description = 'IronPython Engine'
 
